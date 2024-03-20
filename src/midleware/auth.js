@@ -1,19 +1,47 @@
 
-const pasport = require('passport');
-const {Strategy, ExtractJwt} = require('passport-jwt');
+const passport = require("passport");
+const { Strategy, ExtractJwt } = require("passport-jwt")
 const user = require('../models/model');
 
 
-const jwt_sercret  = '##%dasdasadas##';
+const jwt_secret = "##%dasdsadasd##";
 
-const Strategy = new Strategy(
 
+const strategy = new Strategy( 
     {
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-        secretOrKey: jwt_sercret
+        secretOrKey: jwt_secret
     },
     async (jwtPayload, done) => {
-        const user = await user.findOne({_id: jwtPayload._id});
-        return user;
-    },
+        try {
+            const user = await user.findById({userid: jwtPayload.id})
+            if(!user) {
+                const error = new Error("User not found")
+                console.log(error)
+            }
+            done(null, user) 
+
+        } catch (error) {
+            done(error)
+        }
+    }
 );
+
+
+passport.use(strategy);
+
+const initialize = () => {
+    return passport.initialize();
+};
+
+const authenticate = () => {
+    return passport.authenticate("jwt", {session:false})
+} ;
+
+module.exports = {
+    initialize,
+    authenticate,
+};
+
+
+
