@@ -7,8 +7,8 @@ const  gnerarPassword = (length = 8) => {
     const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let password = '';
     for (let i = 0; i < length; i++) {
-        const randomIndex = Math.floor(Math.random() * charset.length);
-        password += charset[randomIndex];
+        const rdmIndex = Math.floor(Math.random() * charset.length);
+        password += charset[rdmIndex];
     }
     return password;
 };
@@ -39,7 +39,7 @@ export default gnerarPassword;
 
 //  Genera un índice aleatorio. `Math.random()` genera un número aleatorio entre 0 y 1, y al multiplicarlo por `charset.length` obtenemos un número aleatorio entre 0 y la longitud de `charset`. `Math.floor()` redondea este número hacia abajo al entero más cercano para obtener un índice válido para `charset`.
 
-// 6. `password += charset[randomIndex];
+// 6. `password += charset[rdmIndex];
 
 // Añade el carácter en `charset` en la posición `randomIndex` a la contraseña.
 
